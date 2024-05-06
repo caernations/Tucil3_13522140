@@ -38,7 +38,6 @@ public class Main {
 
         if (path != null) {
             System.out.println("Path: " + path);
-            System.out.println("Nodes visited: " + path.size());
             System.out.println("Time taken: " + (endTime - startTime) + " ms");
         } else {
             System.out.println("No path found.");
