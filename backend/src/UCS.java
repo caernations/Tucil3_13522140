@@ -16,11 +16,14 @@ public class UCS {
         Queue<Node> frontier = new PriorityQueue<>(Comparator.comparingInt(n -> n.cost));
         Map<String, Integer> visited = new HashMap<>();
         frontier.add(new Node(start, null, 0));
+        int totalVisitedNodes = 0; 
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
+            totalVisitedNodes++; 
 
             if (current.word.equals(end)) {
+                System.out.println("Total nodes visited: " + totalVisitedNodes);
                 return constructPath(current);
             }
 
@@ -31,6 +34,7 @@ public class UCS {
                 }
             }
         }
+        System.out.println("Total nodes visited: " + totalVisitedNodes);
         return null;
     }
 
