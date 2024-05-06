@@ -15,26 +15,32 @@ public class GBFS {
 
         Queue<Node> frontier = new PriorityQueue<>(Comparator.comparingInt(n -> n.heuristic));
         Map<String, Integer> visited = new HashMap<>();
+        Set<String> allVisitedNodes = new HashSet<>(); 
+
         frontier.add(new Node(start, null, heuristic(start, end)));
+        allVisitedNodes.add(start); 
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
             if (current.word.equals(end)) {
+                System.out.println("Total visited nodes: " + allVisitedNodes.size()); 
                 return constructPath(current);
             }
 
-            // Only consider this node if we haven't visited it or we found a cheaper way to visit it
             if (!visited.containsKey(current.word) || visited.get(current.word) > current.heuristic) {
                 visited.put(current.word, current.heuristic);
 
                 for (String neighbor : getNeighbors(current.word)) {
                     if (!visited.containsKey(neighbor) || visited.get(neighbor) > heuristic(neighbor, end)) {
                         frontier.add(new Node(neighbor, current, heuristic(neighbor, end)));
+                        allVisitedNodes.add(neighbor); 
                     }
                 }
             }
         }
+
+        System.out.println("Total visited nodes: " + allVisitedNodes.size()); 
         return null;
     }
 
