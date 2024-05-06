@@ -17,17 +17,23 @@ public class AStar {
         Map<String, Integer> gScore = new HashMap<>();
         gScore.put(start, 0);
         Map<String, Node> cameFrom = new HashMap<>();
+        Set<String> visitedNodes = new HashSet<>();  // To track all visited nodes
 
         frontier.add(new Node(start, null, 0, heuristic(start, end)));
+        visitedNodes.add(start);  // Add the start node to visited nodes
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
             if (current.word.equals(end)) {
+                System.out.println("Total visited nodes: " + visitedNodes.size());  // Print the number of visited nodes
                 return constructPath(current);
             }
 
             for (String neighbor : getNeighbors(current.word)) {
+                if (!visitedNodes.contains(neighbor)) {
+                    visitedNodes.add(neighbor);  // Add new nodes to visited nodes
+                }
                 int tentativeGScore = gScore.get(current.word) + 1;
                 if (!gScore.containsKey(neighbor) || tentativeGScore < gScore.get(neighbor)) {
                     cameFrom.put(neighbor, current);
@@ -37,6 +43,7 @@ public class AStar {
                 }
             }
         }
+        System.out.println("Total visited nodes: " + visitedNodes.size());  // Print the number of visited nodes
         return null;
     }
 
